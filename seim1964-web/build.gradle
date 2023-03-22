@@ -1,0 +1,40 @@
+apply plugin: 'war'
+
+dependencies {
+    // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+    compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.4'
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+
+    implementation project(':seim1964-backend')
+}
+
+def deploymentName = 'seim1964-web'
+
+def tomcatHome = System.getenv('CATALINA_HOME')
+logger.quiet("Tomcat home detected as '${tomcatHome}'")
+
+task deploy(type: Copy, dependsOn: 'war') {
+    doFirst {
+        if (!tomcatHome) {
+            throw new InvalidUserDataException("Tomcat home (CATALINA_HOME) not set")
+        }
+    }
+    from war.archiveFile
+    rename war.archiveFileName.get(), "${deploymentName}.war"
+    into "${tomcatHome}/webapps"
+}
+
+task undeploy(type: Delete) {
+    doFirst {
+        if (!tomcatHome) {
+            throw new InvalidUserDataException("Tomcat home (CATALINA_HOME) not set")
+        }
+    }
+
+    delete "${tomcatHome}/webapps/${deploymentName}.war"
+}
