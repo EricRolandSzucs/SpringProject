@@ -1,0 +1,6 @@
+rootProject.name = 'lab-seim1964'
+include 'seim1964-backend'
+include 'seim1964-desktop'
+include 'seim1964-web'
+include 'seim1964-spring'
+
