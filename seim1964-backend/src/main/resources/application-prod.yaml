@@ -1,0 +1,9 @@
+daoType: jdbc
+jdbcUser: user
+jdbcPassword: godbless123!
+jdbcDatabase: announcements
+jdbcDriver: com.mysql.cj.jdbc.Driver
+jdbcUrl: localhost:3306
+jdbcPoolSize: 10
+logQueries: true
+logUpdates: true
