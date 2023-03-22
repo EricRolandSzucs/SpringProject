@@ -1,0 +1,22 @@
+plugins {
+    id 'application'
+}
+dependencies {
+    implementation project(':seim1964-backend')
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'edu.bbte.idde.seim1964'
+            artifactId = 'seim1964-desktop'
+            version = '1.0.0-SNAPSHOT'
+
+            from components.java
+        }
+    }
+}
+
+application {
+    mainClassName = 'edu.bbte.idde.seim1964.desktop.Main'
+}
